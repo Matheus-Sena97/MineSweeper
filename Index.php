@@ -3,6 +3,7 @@
 require_once 'parts/Table.class.php';
 
 $table = new Table;
+$table->firstClick();
 $table->render();
 
 ?>

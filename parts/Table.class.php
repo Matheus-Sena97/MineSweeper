@@ -15,7 +15,7 @@ public function __construct()
     $this->width = 9;
 
     for($i1 = 0; $i1 < $this->height; $i1++){
-        for($i2 =0; $i2 < $this->width; $i2++){
+        for($i2 = 0; $i2 < $this->width; $i2++){
             $this->row[$i1][$i2] = new Slot(true,false);
         }
     }

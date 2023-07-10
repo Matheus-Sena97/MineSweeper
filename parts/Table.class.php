@@ -9,6 +9,7 @@ class Table{
     public int $bomb_count;
     public array $row = [];
     public bool $start = false;
+    public bool $gameover = false;
 
     public function __construct($start = false, $row = [])
     {
@@ -50,13 +51,28 @@ class Table{
 
     public function click($l, $c)
     {
+        if($this->gameover) return false;
+        
         $this->row[$l][$c]->hidden = false;
+
+        if($this->row[$l][$c]->bomb) {
+            $this->gameover = true;
+        }
+
         if($this->row[$l][$c]->n == 0 && !$this->row[$l][$c]->bomb) {
-            if($l-1 >=0 && $c-1>=0) $this->click($l-1,$c-1);
+            if($l-1 >=0 && $c-1>=0 && $this->row[$l-1][$c-1]->hidden) $this->click($l-1,$c-1);
+            if($l-1 >=0 && $c>=0 && $this->row[$l-1][$c]->hidden) $this->click($l-1,$c);
+            if($l-1 >=0 && $c+1<$this->width && $this->row[$l-1][$c+1]->hidden)$this->click($l-1,$c+1);
+            if($c-1>=0 && $this->row[$l][$c-1]->hidden)$this->click($l,$c-1);
+            if($c+1<$this->width && $this->row[$l][$c+1]->hidden)$this->click($l,$c+1);
+            if($l+1 < $this->height && $c-1>=0 && $this->row[$l+1][$c-1]->hidden)$this->click($l+1,$c-1);
+            if($l+1 < $this->height && $c>=0 && $this->row[$l+1][$c]->hidden)$this->click($l+1,$c);
+            if($l+1 < $this->height && $c+1<$this->width && $this->row[$l+1][$c+1]->hidden)$this->click($l+1,$c+1);
         }
     }
 
     function render(){
+        if($this->gameover) echo "GAME OVER<br>";
         for($i1 = 0; $i1 < count($this->row); $i1++){
             for($i2 = 0; $i2 < count($this->row[$i1]); $i2++){
                 $slot = $this->row[$i1][$i2];

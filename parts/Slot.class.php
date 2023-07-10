@@ -3,6 +3,7 @@
 class Slot{
     public bool $hidden;
     public bool $bomb;
+    public bool $mark;
     public int $pl;
     public int $pc;
     public int $n = 0;

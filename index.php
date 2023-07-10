@@ -14,6 +14,9 @@ if(!empty($_SESSION['table'])) {
     $table = unserialize($_SESSION['table']);
 }
 
+if(!empty($_GET['slot'])) {
+}
+
 if(!empty($_POST['slot'])) {
     $linha = 0;
     $coluna = 0;
@@ -35,3 +38,16 @@ $_SESSION['table'] = serialize($table);
 ?>
 <br>
 <form action="." method="POST"><input type="submit" value="Novo Jogo" name="newgame"></form>
+
+<script>
+    const buttons = document.getElementsByTagName("button");
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("mousedown", function(event) {
+            if (event.which === 3 || event.button === 2) {                
+                window.location.href = ".?slot="+this.value;
+            }
+        });
+    }
+    window.addEventListener("contextmenu", e => e.preventDefault());
+
+</script>
